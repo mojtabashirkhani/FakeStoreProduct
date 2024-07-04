@@ -32,7 +32,7 @@ fun AppNavHost(modifier: Modifier = Modifier,
         composable(startDestination) {
             productList(
                 onGoToItem = { productItem ->
-                    navController.navigate("${NavigationItem.Detail.route}?productItem={$productItem}")
+                    navController.navigate("${NavigationItem.Detail.route}?productItem=$productItem")
                 }
             )
         }

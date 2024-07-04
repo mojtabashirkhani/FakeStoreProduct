@@ -26,15 +26,15 @@ class ProductRepositoryImpl @Inject constructor(
 
 
 
-    override suspend fun insertProductDetailToFavourite(productEntity: ProductEntity) {
-        productDao.insertProductDetailToFavorite(productEntity)
+    override suspend fun insertProductDetailToFavourite(productEntity: ProductEntity): Long {
+        return productDao.insertProductDetailToFavorite(productEntity)
     }
 
     override suspend fun getProductFavorite(id: Long): Flow<ProductEntity> {
         return productDao.getProductById(id)
     }
 
-    override suspend fun deleteProductDetailFromFavourite(productEntity: ProductEntity) {
-        productDao.deleteProductDetailToFavorite(productEntity)
+    override suspend fun deleteProductDetailFromFavourite(productEntity: ProductEntity): Int {
+        return productDao.deleteProductDetailToFavorite(productEntity)
     }
 }

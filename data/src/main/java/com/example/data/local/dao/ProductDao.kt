@@ -17,10 +17,10 @@ interface ProductDao {
      *@author Burhan ud din ---> method used to add item searched
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProductDetailToFavorite(productEntity: ProductEntity)
+    suspend fun insertProductDetailToFavorite(productEntity: ProductEntity): Long
 
     @Delete
-    suspend fun deleteProductDetailToFavorite(productEntity: ProductEntity)
+    suspend fun deleteProductDetailToFavorite(productEntity: ProductEntity): Int
 
 
 }
