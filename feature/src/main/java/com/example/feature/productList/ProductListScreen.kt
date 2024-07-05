@@ -29,10 +29,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import coil.size.Scale
 import com.example.data.remote.model.ProductResponse
 import com.google.gson.Gson
 
@@ -89,49 +91,60 @@ fun productItem(
             .padding(12.dp)
             .clip(RoundedCornerShape(30.dp, 30.dp, 30.dp, 30.dp)),
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onItemClick(item) },
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-
-            Text(
-                text = item.category ?: "",
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
-
-            Text(
-                text = item.title ?: "",
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
-
-            Text(
-                text = item.price.toString(),
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
 
 
             Card() {
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onItemClick(item) },
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+
                 AsyncImage(
                     model = ImageRequest
                         .Builder(context)
                         .data("${item.image}")
                         .crossfade(true)
+                        .scale(Scale.FIT)
                         .build(),
                     contentDescription = "",
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier.size(
                         (LocalConfiguration.current.screenWidthDp).dp,
-                        (LocalConfiguration.current.screenHeightDp).dp
+                        (LocalConfiguration.current.screenWidthDp).dp
                     ),
-                    contentScale = ContentScale.Crop,
-
                     )
+
+                    Text(
+                        text = item.category ?: "",
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(horizontal = 20.dp, 8.dp),
+                        fontSize = 18.sp
+                    )
+
+                    Text(
+                        text = item.title ?: "",
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(horizontal = 20.dp),
+                        fontSize = 16.sp
+                    )
+
+                    Text(
+                        text = "Price: " + item.price.toString() + "$",
+                        style = MaterialTheme.typography.displaySmall,
+                        modifier = Modifier.padding(horizontal = 20.dp, 8.dp),
+                        fontSize = 14.sp
+                    )
+
             }
+
+
+
+
+
 
         }
 

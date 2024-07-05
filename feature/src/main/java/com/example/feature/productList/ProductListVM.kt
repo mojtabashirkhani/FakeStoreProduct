@@ -25,7 +25,7 @@ class ProductListVM @Inject constructor(private val productRepository: ProductRe
                 if (it.isLoading())
                     productListStateFlow.emit(Resource.loading())
                 else if (it.isSuccess())
-                    Resource.success(it).data?.let { it1 -> productListStateFlow.emit(it1) }
+                    productListStateFlow.emit(Resource.success(it.data?.sortedBy { it.price }))
                 else
                     productListStateFlow.emit(Resource.error(it.message))
             }

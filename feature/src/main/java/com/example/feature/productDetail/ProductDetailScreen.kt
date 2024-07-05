@@ -1,8 +1,11 @@
 package com.example.feature.productDetail
 
+import android.widget.ImageButton
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,16 +22,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import coil.size.Scale
 import com.example.data.local.model.ProductEntity
 import com.example.data.remote.model.ProductResponse
+import com.example.feature.R
 import com.example.util.fromJson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,11 +50,11 @@ fun productDetail(productItem: String, onGoBack: () -> Unit) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val productListStateFlow by productDetailVM.productStateFlow.collectAsStateWithLifecycle()
-    var productFavorite by remember { mutableStateOf(ProductEntity())}
+    var productFavorite by remember { mutableStateOf(ProductEntity()) }
     var isFavorite by remember { mutableStateOf(-1L) }
 
     coroutineScope.launch(Dispatchers.IO) {
-        productDetailVM.getProductFavourite(item?.id?: 0L)
+        productDetailVM.getProductFavourite(item?.id ?: 0L)
     }
 
     LaunchedEffect(productListStateFlow) {
@@ -59,57 +68,27 @@ fun productDetail(productItem: String, onGoBack: () -> Unit) {
         verticalArrangement = Arrangement.Center
     ) {
 
-        Button(onClick = {
-            coroutineScope.launch {
-                withContext(Dispatchers.IO) {
-                    isFavorite = productDetailVM.insertProductToFavourite(
-                        ProductEntity(
-                            item?.id ?: 0L,
-                        )
-                    )
-                }
-            }
-        }) {
-            Text("Add to Favourite")
-        }
 
-
-
-        if (productFavorite.id != 0L || isFavorite != -1L) {
+        /*if (productFavorite.id != 0L || isFavorite != -1L) {
             Text(
                 text = "is favorite",
                 style = MaterialTheme.typography.displaySmall,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
-        }
+        }*/
 
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Card(modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()) {
 
-            Text(
-                text = item?.category ?: "",
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
 
-            Text(
-                text = item?.title ?: "",
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
-
-            Text(
-                text = item?.price.toString(),
-                style = MaterialTheme.typography.displaySmall,
-                modifier = Modifier.padding(horizontal = 20.dp)
-            )
-
-            Card() {
                 AsyncImage(
                     model = ImageRequest
                         .Builder(context)
@@ -119,11 +98,59 @@ fun productDetail(productItem: String, onGoBack: () -> Unit) {
                     contentDescription = "",
                     modifier = Modifier.size(
                         (LocalConfiguration.current.screenWidthDp).dp,
-                        (LocalConfiguration.current.screenHeightDp).dp
+                        (LocalConfiguration.current.screenWidthDp).dp
                     ),
                     contentScale = ContentScale.Crop,
 
                     )
+
+                Text(
+                    text = item?.category ?: "",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(horizontal = 20.dp, 8.dp),
+                    fontSize = 18.sp
+                )
+
+                Text(
+                    text = item?.description ?: "",
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    fontSize = 16.sp
+                )
+
+                Text(
+                    text = "Price: " + item?.price.toString() + "$",
+                    style = MaterialTheme.typography.displaySmall,
+                    modifier = Modifier.padding(horizontal = 20.dp, 8.dp),
+                    fontSize = 14.sp
+                )
+
+                Button(onClick = {
+                    coroutineScope.launch {
+                        withContext(Dispatchers.IO) {
+                            isFavorite = productDetailVM.insertProductToFavourite(
+                                ProductEntity(
+                                    item?.id ?: 0L,
+                                )
+                            )
+                        }
+                    }
+                }) {
+                    if (productFavorite.id != 0L || isFavorite != -1L) {
+                        Image(
+                            painter = painterResource(id = R.drawable.icons8_star_filled_48),
+                            contentDescription = null
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = R.drawable.icons8_star_50),
+                            contentDescription = null
+                        )
+                    }
+
+                }
+
+
             }
         }
     }
