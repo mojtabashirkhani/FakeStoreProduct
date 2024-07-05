@@ -8,6 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface ProductRepository {
     suspend fun getRemoteProducts() : Flow<Resource<List<ProductResponse>>>
     suspend fun insertProductDetailToFavourite(productEntity: ProductEntity): Long
-    suspend fun getProductFavorite(id: Long) : Flow<ProductEntity>
-    suspend fun deleteProductDetailFromFavourite(productEntity: ProductEntity): Int
+    suspend fun getProductFavorite(id: Long) : Flow<ProductEntity>?
 }

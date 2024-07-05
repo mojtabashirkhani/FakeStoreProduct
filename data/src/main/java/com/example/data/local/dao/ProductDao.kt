@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
-    @Query("SELECT * FROM productfavorite  WHERE id=:id")
-    fun getProductById(id: Long): Flow<ProductEntity>
+    @Query("SELECT * FROM ProductFavorite  WHERE id=:id")
+    fun getProductById(id: Long): Flow<ProductEntity>?
 
     /**
      *@author Burhan ud din ---> method used to add item searched
@@ -19,8 +19,6 @@ interface ProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProductDetailToFavorite(productEntity: ProductEntity): Long
 
-    @Delete
-    suspend fun deleteProductDetailToFavorite(productEntity: ProductEntity): Int
 
 
 }
