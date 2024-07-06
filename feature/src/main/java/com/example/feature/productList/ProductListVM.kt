@@ -2,9 +2,9 @@ package com.example.feature.productList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.remote.api.Resource
-import com.example.data.remote.model.ProductResponse
-import com.example.data.repo.ProductRepositoryImpl
+import com.example.network.api.Resource
+import com.example.domain.ProductRepositoryImpl
+import com.example.network.model.ProductResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

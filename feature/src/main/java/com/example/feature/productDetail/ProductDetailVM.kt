@@ -1,15 +1,10 @@
 package com.example.feature.productDetail
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.data.local.model.ProductEntity
-import com.example.data.remote.api.Resource
-import com.example.data.remote.model.ProductResponse
-import com.example.data.repo.ProductRepositoryImpl
+import com.example.database.model.ProductEntity
+import com.example.domain.ProductRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

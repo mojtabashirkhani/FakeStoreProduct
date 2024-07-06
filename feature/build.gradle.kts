@@ -42,8 +42,11 @@ android {
 
 dependencies {
 
-    implementation(project(":util"))
-    implementation(project(":data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:database"))
+    implementation(project(":core:data"))
+    implementation(project(":core:common"))
+    implementation(project(":core:network"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
@@ -53,6 +56,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

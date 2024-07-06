@@ -35,7 +35,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Scale
-import com.example.data.remote.model.ProductResponse
+import com.example.network.model.ProductResponse
 import com.google.gson.Gson
 
 

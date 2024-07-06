@@ -1,8 +1,7 @@
 package com.example.feature.productDetail
 
-import android.widget.ImageButton
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,8 +21,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -34,15 +31,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import coil.size.Scale
-import com.example.data.local.model.ProductEntity
-import com.example.data.remote.model.ProductResponse
+import com.example.common.fromJson
+import com.example.database.model.ProductEntity
 import com.example.feature.R
-import com.example.util.fromJson
+import com.example.network.model.ProductResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun productDetail(productItem: String, onGoBack: () -> Unit) {
     val productDetailVM: ProductDetailVM = hiltViewModel()
