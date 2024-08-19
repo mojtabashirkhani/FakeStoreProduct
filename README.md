@@ -1,5 +1,5 @@
 # FakeStoreProduct
-FakeStoreProduct is a simple application with a home screen showing a list of products with a detailed screen and bookmark option.
+FakeStoreProduct: Modular MVVM Clean Architecture App with REST API Integration and Room Database Bookmarks
 
 ### Libraries and tools
 
